@@ -14,4 +14,4 @@ https://firebase.google.com/docs/firestore/manage-data/delete-data
 https://www.youtube.com/watch?v=F6LEKdQPSiM&list=PLSuzwxF6LC4AGZN8SrPbRkN3MrLWubOGW
 https://www.youtube.com/watch?v=T4_16HPoJrI
 https://towardsdev.com/firebase-authentication-node-js-using-rest-api-and-async-await-302a568d6470-> basic data struc
-create->project-setting->generate-key
+https://www.youtube.com/watch?v=29BNaJiqWB4&t=256s
