@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { FieldValue } = require("firebase-admin/firestore")
-const { db } = require('../firebase.js')
+const {firebase_auth, firebase } = require('../firebase.js')
 
 
 router.get('/products', async (req, res) => {
