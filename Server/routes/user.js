@@ -28,7 +28,7 @@ router.post('/signin', async(req, res, next) => {
 
 router.post('/signup', async(req, res, next) => {
 
-    if(!!req.body.email || !!req.body.password){
+    if(!!req.body.email === false|| !!req.body.password === false){
         return res.status(422).json({
             email:"email is required",
             password:"password is required"
@@ -41,8 +41,8 @@ router.post('/signup', async(req, res, next) => {
         disable: false
         }
     ).then(response => {
-    console.log("aaron")
-    console.log(response)
+
+    res.send(response)
     }).catch(function(error) {
     // Handle Errors here.
     var errorCode = error.code;

@@ -69,21 +69,11 @@ const friends = {
 //     res.status(200).send(friends)
 // })
 
-const user_router = require("./routes/testuser1")
+
 const product_router = require("./routes/product")
-const test_rotuer = require("./routes/user")
-app.use('/v1/api/users', test_rotuer)
-app.use('/v1/api/tusers', user_router)
+const user_router = require("./routes/user")
+app.use('/v1/api/users', user_router)
 app.use('/v1/api/products', product_router)
-app.get('/v1/api/products1', async(req, res, next) => {
-    res.send("test")
-});
-app.post('/test_signup', async(req, res, next) => {
-
-    res.send(req.body)
-
- 
-});
 const PORT = 9900
 const DOMAIN  = 'localhost'
 app.listen(PORT, DOMAIN, () => {
