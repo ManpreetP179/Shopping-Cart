@@ -1,4 +1,5 @@
-// Update with your config settings.
+const { knexSnakeCaseMappers } = require("objection");
+
 
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
@@ -18,5 +19,6 @@
     seeds: {
       directory: "./db/seeds",
     },
+    ...knexSnakeCaseMappers,
   },
 };
