@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const bcrypt = require("bcrypt");
 
 router.post('/', async(req, res, next) => {
     res.send(req.body)
@@ -28,6 +28,9 @@ router.post('/signup', async(req, res, next) => {
             password:"password is required"
         })
     }
+
+    const {email, password } = req.body
+
   
 });
 
