@@ -10,7 +10,7 @@ class Product extends Model {
     const Review = require('./review');
     return {
       belongs_to_a_writer: {
-        relation: Model.BelongsToOneRelation,
+        relation: Model.HasManyRelation,
         modelClass: User,
         join: {
           from: 'products.user_id',

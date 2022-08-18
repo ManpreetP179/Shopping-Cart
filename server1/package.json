@@ -4,7 +4,6 @@
   "description": "#install npm install express firebase dotenv cors morgan  npm i cookie-parser method-override morgan path npm i nodemon --save-db npm i body-parser",
   "main": "index.js",
   "scripts": {
-
     "start": "nodemon index.js",
     "migrate": "knex migrate:latest",
     "rollback": "knex migrate:rollback",
@@ -14,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",

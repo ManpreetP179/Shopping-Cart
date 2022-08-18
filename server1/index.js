@@ -30,17 +30,11 @@ app.use(cookieParser())
 
 
 
-const product_router = require("./routes/product")
-const user_router = require("./routes/user")
+
 // app.use('/v1/api/users', user_router)
 // app.use('/v1/api/products', product_router)
-app.get('/', async(req, res, next) => {
-
-    const UserDAO = require('./dao/user')
-    let alldata = []
-    const data = UserDAO.findById(2)
-    res.send(data)
-});
+const index = require("./routes/index")
+app.use(index);
 const PORT = 9900
 const DOMAIN  = 'localhost'
 app.listen(PORT, DOMAIN, () => {

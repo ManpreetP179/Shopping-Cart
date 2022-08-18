@@ -1,4 +1,4 @@
-const User = require('../model/users');
+const User = require('../model/products');
 
 class UserDAO {
   findById(id) {
