@@ -28,13 +28,26 @@ app.use(methodOverride((req,res) => {
 
 app.use(cookieParser())
 
+//if looged in save into cookie
+//console will pop out as signed in
+app.use((req, res, next) => {
+    const username = req.cookies.username
+    res.locals.username = '';
 
+    if(username){
+        res.locals.username = username;
+        console.log(`Signed in as ${username}`)
+    }
+    next();
+})
 
+app.get('/',(req,res,next)=>{
+    res.send("it is working but it is under construction")
+})
 
-// app.use('/v1/api/users', user_router)
-// app.use('/v1/api/products', product_router)
-const index = require("./routes/index")
-app.use(index);
+//login routes
+const user = require("./routes/user")
+app.use(user);
 const PORT = 9900
 const DOMAIN  = 'localhost'
 app.listen(PORT, DOMAIN, () => {

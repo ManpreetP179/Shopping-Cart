@@ -1,9 +1,12 @@
+
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
 //we are using knex to create the data
+
 exports.up = function(knex, Promise) {
+
     return knex.schema.createTable('users', function(table) {
         table.increments('id').primary();
         table.string('email').notNullable().unique();
