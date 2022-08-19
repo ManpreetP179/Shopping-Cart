@@ -1,97 +1,42 @@
 const express = require('express');
 const router = express.Router();
-const { FieldValue } = require("firebase-admin/firestore")
-const {firebase_auth, firebase } = require('../firebase.js')
-
-
-router.get('/products', async (req, res) => {
-    const productRef = db.collection('products').doc('associates')
-    const doc = await productRef.get()
-    if (!doc.exists) {
-        return res.sendStatus(400)
-    }
-    res.status(200).send(doc)
-})
 
 
 
-router.post('/new', async (req, res) => {
-    const { title, description,  status } = req.body
-    const data = {title, description}
-    const productRef = db.collection('products').doc('associates').set(data)
-    const res2 = await productRef.set({
-        [title]: title,
-        [description]:description
-    }, { merge: true })
-  
-    res.status(200).send(friends)
-})
-// not sure this will work out
-router.patch('/products/:id', async (req, res) => {
-    const {  title, description, newStatus } = req.body
-    const peopleRef = db.collection('people').doc('associates')
-    const res2 = await peopleRef.set({
-        [name]: newStatus
-    }, { merge: true })
-
-    res.status(200).send(friends)
-})
-
-// router.delete('/friends', async (req, res) => {
-//     const { title, description } = req.body
-//     const peopleRef = db.collection('people').doc('associates')
-//     const res2 = await peopleRef.update({
-//         [title]: FieldValue.delete(),
-//         [description]: FieldValue.delete()
-//     })
-//     res.status(200).send(friends)
-// })
-
-// pp.get('/friends', async (req, res) => {
-//     const peopleRef = db.collection('people').doc('associates')
-//     const doc = await peopleRef.get()
-//     if (!doc.exists) {
+// router.get('/', async (req, res) => {
+//     const products = await db.collection('products').get()
+//     if (products.length === 0) {
 //         return res.sendStatus(400)
 //     }
-
-//     res.status(200).send(doc.data())
+//     const list = products.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+//     res.status(200).send(list)
 // })
 
-// app.get('/friends/:name', (req, res) => {
-//     const { name } = req.params
-//     if (!name || !(name in friends)) {
-//         return res.sendStatus(404)
-//     }
-//     res.status(200).send({ [name]: friends[name] })
+
+// router.post('/new', async (req, res) => {
+//     const data = req.body;
+//     const products = db.collection('products')
+//     products.add(data)
+//     res.status(200).send({msg:"Updated"})
+// })
+// // not sure this will work out
+// router.patch('/:id', async (req, res) => {
+//     const id = req.params.id;
+//     // delete req.body.id;
+//     const data = req.body;
+//     const updated_record = await db.collection('products').doc(id).update(data);
+//     res.status(200).send(updated_record);
 // })
 
-// app.post('/addfriend', async (req, res) => {
-//     const { name, status } = req.body
-//     const peopleRef = db.collection('people').doc('associates')
-//     const res2 = await peopleRef.set({
-//         [name]: status
-//     }, { merge: true })
-//     // friends[name] = status
-//     res.status(200).send(friends)
+// router.delete('/delete', async (req, res) => {
+   
+//     const id= req.params.uid
+//     const bid= req.body.uid
+//     res.status(400).send("loser",bid)
+    
+
 // })
 
-// app.patch('/changestatus', async (req, res) => {
-//     const { name, newStatus } = req.body
-//     const peopleRef = db.collection('people').doc('associates')
-//     const res2 = await peopleRef.set({
-//         [name]: newStatus
-//     }, { merge: true })
-//     // friends[name] = newStatus
-//     res.status(200).send(friends)
-// })
 
-// app.delete('/friends', async (req, res) => {
-//     const { name } = req.body
-//     const peopleRef = db.collection('people').doc('associates')
-//     const res2 = await peopleRef.update({
-//         [name]: FieldValue.delete()
-//     })
-//     res.status(200).send(friends)
-// })
 
 module.exports = router;
