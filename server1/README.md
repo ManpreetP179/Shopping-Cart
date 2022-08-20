@@ -26,10 +26,5 @@ https://github.com/KritikaSharmaKS/Objection-Youtube/blob/main/models/customer.j
 https://www.loginradius.com/blog/engineering/hashing-user-passwords-using-bcryptjs/
 
 things to do
-[]
-[]
-[]
-[]
-[]
-[]
-[]
+
+

@@ -25,7 +25,6 @@ const bcrypt = require("bcrypt");
   
 
   const users =  await Promise.all(Array.from({length: 6}).map((e, index) => {
-    console.log(PASSWORD)
     if(index === 0 ){
       return {
         email: "admin@user.com",

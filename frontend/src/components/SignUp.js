@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import Navigation from "./Navigation"
 
-export default function (props) {
-  let [authMode, setAuthMode] = useState("signup")
+export const SignUp = (props) => {
+  let [authMode, setAuthMode] = useState("")
 
   const changeAuthMode = () => {
     setAuthMode(authMode === "signup" ? "signin" : "signup")
