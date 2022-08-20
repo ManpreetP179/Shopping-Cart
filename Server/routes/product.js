@@ -1,97 +1,87 @@
-const express = require('express');
+import express from 'express';
+import { addDoc, collection, doc, deleteDoc, where, query, getDoc, getDocs } from 'firebase/firestore';
+import { collections, db } from '../firebase.js';
 const router = express.Router();
-const { FieldValue } = require("firebase-admin/firestore")
-const {firebase_auth, firebase } = require('../firebase.js')
+// TODO add db import
+/**
+ * description
+""""
+name
+""""
+price
+0
+product_img
+""""
+product_reviews
+0
+ */
+
+router.get('/', async (req, res) => {
 
 
-router.get('/products', async (req, res) => {
-    const productRef = db.collection('products').doc('associates')
-    const doc = await productRef.get()
-    if (!doc.exists) {
+    const products = await db.collection('products').get()
+    if (products.length === 0) {
         return res.sendStatus(400)
     }
-    res.status(200).send(doc)
+    const list = products.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    res.status(200).send(list)
 })
-
 
 
 router.post('/new', async (req, res) => {
-    const { title, description,  status } = req.body
-    const data = {title, description}
-    const productRef = db.collection('products').doc('associates').set(data)
-    const res2 = await productRef.set({
-        [title]: title,
-        [description]:description
-    }, { merge: true })
-  
-    res.status(200).send(friends)
+    const { product_id, name, price, product_img, description } = req.body;
+
+    const newProduct = {
+        product_id,
+        name,
+        price,
+        product_img,
+        description
+    }
+    try {
+        const newProductRef = await addDoc(collection(db, collections.PRODUCTS), newProduct)
+        res.send(newProductRef);
+    } catch (error) {
+        console.log(`Error: ${error}`);
+    }
 })
 // not sure this will work out
-router.patch('/products/:id', async (req, res) => {
-    const {  title, description, newStatus } = req.body
-    const peopleRef = db.collection('people').doc('associates')
-    const res2 = await peopleRef.set({
-        [name]: newStatus
-    }, { merge: true })
-
-    res.status(200).send(friends)
+router.patch('/:id', async (req, res) => {
+    const id = req.params.id;
+    // delete req.body.id;
+    const data = req.body;
+    const updated_record = await db.collection('products').doc(id).update(data);
+    res.status(200).send(updated_record);
 })
 
-// router.delete('/friends', async (req, res) => {
-//     const { title, description } = req.body
-//     const peopleRef = db.collection('people').doc('associates')
-//     const res2 = await peopleRef.update({
-//         [title]: FieldValue.delete(),
-//         [description]: FieldValue.delete()
-//     })
-//     res.status(200).send(friends)
-// })
+router.post('/delete', async (req, res) => {
+    // the actual name or id of the document we want to delete, is a bunch of random letters and numbers that we dont know
+    // but we do know the product id
+    // so we run a query to find products with a matching id, and then we dont need to know the random letters and numbers, it will delete the corresponding product
+    const { product_id } = req.body
+    // get a reference for the products collection
+    const productsRef = collection(db, collections.PRODUCTS)
+    // write a query statement:
+    // look inside the productsRef collection, and find all matching documents where product_id == product_id
+    const q = query(productsRef, where("product_id", "==", product_id));
+    // pass that query into the getDocs method, which returns a QuerySnapshot
+    const matchingProducts = await getDocs(q)
+    // we loop over the results in the snapshot array
+    if (matchingProducts.length > 0) {
+        matchingProducts.forEach(async (matchingProduct) => {
+            // each matchingProduct has a ref property, which is of a type DocumentReference, which is what deleteDoc requires to function
+            await deleteDoc(matchingProduct.ref)
+        })
+        res.send(`Deleted ${product_id}`)
+    } else { // we did not find a matching product
+        res.send(`Could not find matching product with product id ${product_id}`)
+    }
 
-// pp.get('/friends', async (req, res) => {
-//     const peopleRef = db.collection('people').doc('associates')
-//     const doc = await peopleRef.get()
-//     if (!doc.exists) {
-//         return res.sendStatus(400)
-//     }
+    //     if(!!id){
 
-//     res.status(200).send(doc.data())
-// })
+    //     }
+    //     const response =  await db.collection('products').doc(id).delete();
+    //     res.status(200).send(id)
+})
 
-// app.get('/friends/:name', (req, res) => {
-//     const { name } = req.params
-//     if (!name || !(name in friends)) {
-//         return res.sendStatus(404)
-//     }
-//     res.status(200).send({ [name]: friends[name] })
-// })
-
-// app.post('/addfriend', async (req, res) => {
-//     const { name, status } = req.body
-//     const peopleRef = db.collection('people').doc('associates')
-//     const res2 = await peopleRef.set({
-//         [name]: status
-//     }, { merge: true })
-//     // friends[name] = status
-//     res.status(200).send(friends)
-// })
-
-// app.patch('/changestatus', async (req, res) => {
-//     const { name, newStatus } = req.body
-//     const peopleRef = db.collection('people').doc('associates')
-//     const res2 = await peopleRef.set({
-//         [name]: newStatus
-//     }, { merge: true })
-//     // friends[name] = newStatus
-//     res.status(200).send(friends)
-// })
-
-// app.delete('/friends', async (req, res) => {
-//     const { name } = req.body
-//     const peopleRef = db.collection('people').doc('associates')
-//     const res2 = await peopleRef.update({
-//         [name]: FieldValue.delete()
-//     })
-//     res.status(200).send(friends)
-// })
-
-module.exports = router;
+export default router;

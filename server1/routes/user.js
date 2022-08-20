@@ -1,39 +1,11 @@
 const express = require('express');
+const userController = require('../controller/user');
+
 const router = express.Router();
-const bcrypt = require("bcrypt");
-
-router.post('/', async(req, res, next) => {
-    res.send(req.body)
-});
-
-router.post('/signin', async(req, res, next) => {
-    try{
-        if(!!req.body.email === false || !!req.body.password === false){
-            return res.status(422).json({
-                email:"email is required",
-                password:"password is required"
-            })
-        }
-        
-      }catch(error){
-          res.status(400).send(error.message)
-      }
-});
-
-router.post('/signup', async(req, res, next) => {
-
-    if(!!req.body.email === false|| !!req.body.password === false){
-        return res.status(422).json({
-            email:"email is required",
-            password:"password is required"
-        })
-    }
-
-    const {email, password } = req.body
-
-  
-});
-
-
+// TODO move implementation to controller and service layer
+router.get('/user/:id', userController.getUser);
+router.post('/user/signin', userController.signIn);
+router.post('/user/signup', userController.signUp);
+router.post('/user/signout', userController.signOut)
 
 module.exports = router;

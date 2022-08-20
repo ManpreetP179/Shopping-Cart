@@ -15,3 +15,8 @@ https://www.youtube.com/watch?v=F6LEKdQPSiM&list=PLSuzwxF6LC4AGZN8SrPbRkN3MrLWub
 https://www.youtube.com/watch?v=T4_16HPoJrI
 https://towardsdev.com/firebase-authentication-node-js-using-rest-api-and-async-await-302a568d6470-> basic data struc
 https://www.youtube.com/watch?v=29BNaJiqWB4&t=256s
+
+
+
+
+https://firebase.google.com/docs/firestore/quickstart#node.js

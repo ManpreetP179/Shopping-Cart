@@ -3,7 +3,7 @@
 #install
 npm install express firebase dotenv cors morgan 
 npm i cookie-parser method-override morgan path cors body-parser knex cors morgan pg express
-npm i nodemon --save-db
+npm i nodemon -D
 npm i objection -D
 npm i react-bootstrap
 npm i bootstrap
@@ -26,10 +26,5 @@ https://github.com/KritikaSharmaKS/Objection-Youtube/blob/main/models/customer.j
 https://www.loginradius.com/blog/engineering/hashing-user-passwords-using-bcryptjs/
 
 things to do
-[]
-[]
-[]
-[]
-[]
-[]
-[]
+
+

@@ -1,15 +1,16 @@
-var firebase = require("firebase-admin");
-var serviceAccount = require("./serviceAccountKey.json");
-const { getFirestore } = require('firebase-admin/firestore')
-const { getAuth } = require('firebase-admin/auth');
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { firebaseConfig1 } from './secret/secret.js';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 
-firebase.initializeApp({
-  credential: firebase.credential.cert(serviceAccount)
-});
+const app = initializeApp(firebaseConfig1)
+const db = getFirestore(app);
+const auth = getAuth();
 
-const db = getFirestore()
-module.exports = { firebase, db}
+const collections = {
+    PRODUCTS: "products",
+    ORDERS: "orders",
+}
 
-
-
+export { app, db, auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, collection, addDoc, collections };
 

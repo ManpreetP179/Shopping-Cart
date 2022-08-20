@@ -1,5 +1,5 @@
 const faker = require('faker');
-
+const bcrypt = require("bcrypt");
  function randomBetween(min, max) { // min and max included 
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
@@ -13,31 +13,29 @@ const faker = require('faker');
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
    await knex.raw('TRUNCATE TABLE "users" CASCADE');
-  //  await knex.raw('TRUNCATE TABLE products CASCADE');
-  //  await knex.raw('TRUNCATE TABLE reviews CASCADE');
+   await knex.raw('TRUNCATE TABLE products CASCADE');
+   await knex.raw('TRUNCATE TABLE reviews CASCADE');
 
-  // const users =  await Promise.all( Array.from({length: 1}).map(() => {
-  //   return {
-  //     email: "admin@user.com",
-  //     password: "123",
-  //     is_customer:false
-  //   }
-  // }))
+
   const emails = await Promise.all(Array.from({length: 7}).map(() => {return faker.internet.email()}));
   //creates one admin and five customers
-  const users =  await Promise.all(Array.from({length: 6}).map((e, index) => {
+  
+  let PASSWORD = "123"
+  PASSWORD = await bcrypt.hash(PASSWORD, 10);
+  
 
-    if(index == 1 ){
+  const users =  await Promise.all(Array.from({length: 6}).map((e, index) => {
+    if(index === 0 ){
       return {
         email: "admin@user.com",
-        password: "123",
+        password: PASSWORD,
         is_customer:false
       }
     }else{
-      console.log("emails", emails[index])
+      
       return {
-        email: emails[index] ,
-        password: "123",
+        email: `client${index}@user.com`,
+        password: PASSWORD,
         is_customer:true
       }
     }

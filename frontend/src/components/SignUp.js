@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import Navigation from "./Navigation"
 
-export default function (props) {
-  let [authMode, setAuthMode] = useState("signup")
+export const SignUp = (props) => {
+  let [authMode, setAuthMode] = useState("")
 
   const changeAuthMode = () => {
     setAuthMode(authMode === "signup" ? "signin" : "signup")
@@ -21,14 +21,6 @@ export default function (props) {
                 <span className="link-primary" onClick={changeAuthMode}>
                 Sign In
                 </span>
-            </div>
-            <div className="form-group mt-3">
-                <label>Full Name</label>
-                <input
-                type="email"
-                className="form-control mt-1"
-                placeholder="e.g Jane Doe"
-                />
             </div>
             <div className="form-group mt-3">
                 <label>Email address</label>
