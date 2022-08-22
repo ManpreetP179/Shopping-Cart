@@ -19,8 +19,8 @@ product_reviews
 router.get('/', async (req, res) => {
 
 
-    const products = await db.collection('products').get()
-    if (products.length === 0) {
+    const productsRef = collection(db, collections.PRODUCTS)
+    if (productsRef.length === 0) {
         return res.sendStatus(400)
     }
     const list = products.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
