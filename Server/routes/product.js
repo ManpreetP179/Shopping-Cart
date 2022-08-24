@@ -21,9 +21,14 @@ router.get('/', async (req, res) => {
 
     const productsRef = collection(db, collections.PRODUCTS)
     if (productsRef.length === 0) {
+        
+    }
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+      } else {
         return res.sendStatus(400)
     }
-    const list = products.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     res.status(200).send(list)
 })
 

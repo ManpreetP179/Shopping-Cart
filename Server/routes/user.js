@@ -11,12 +11,13 @@ const router = express.Router();
 // imageUrl: string
 // review_id: referece?
 // writer: user.email
-
+const COOKIE_MAX_AGE = 24 * 7 * 60 * 60 * 1000;
 router.post('/', async (req, res, next) => {
     res.send(req.body)
 });
 
 router.post('/signin', async (req, res, next) => {
+    
     try {
         if (!!req.body.email === false || !!req.body.password === false) {
             return res.status(422).json({
@@ -25,12 +26,16 @@ router.post('/signin', async (req, res, next) => {
             })
         }
         const { email, password } = req.body;
+        console.log("email", email)
         signInWithEmailAndPassword(auth, email, password)
             .then(userCredential => {
+                res.cookie("email", userCredential.user, {maxAge: COOKIE_MAX_AGE});
                 res.send(userCredential.user)
+                console.log("email", email)
             })
             .catch((error) => {
-                console.log(`Something bad happened lol: ${error.code}`);
+                res.send(error)
+               
             })
     } catch (error) {
         res.status(400).send(error.message)
@@ -38,43 +43,28 @@ router.post('/signin', async (req, res, next) => {
 });
 
 router.post('/signup', async (req, res, next) => {
-
-    if (!!req.body.email === false || !!req.body.password === false) {
+    const { email, password } = req.body;
+    if (!!email === false || !!password === false) {
         return res.status(422).json({
             email: "email is required",
             password: "password is required"
         })
     }
 
-    const { email, password } = req.body;
+ 
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            // signed in... hopefully
+            res.cookie("email", userCredential.user, {maxAge: COOKIE_MAX_AGE});
             res.send(userCredential.user);
         })
         .catch((error) => {
             console.log(`Something bad happened lol: ${error.code}`);
         })
+});
 
-    // firebase.auth().createUser({
-    //     email:req.body.email,
-    //     password:req.body.password,
-    //     emailVerified:false,
-    //     disable: false
-    //     }
-    // ).then(response => {
-
-    // res.send(response)
-    // }).catch(function(error) {
-    // // Handle Errors here.
-    // var errorCode = error.code;
-    // var errorMessage = error.message;
-    // if (errorCode == 'auth/weak-password') {
-    //     console.log('The password is too weak.');
-    // } else {
-    //     console.log(errorMessage);
-    // }
-    // })
+router.delete('/signout', async (req, res, next) => {
+    res.clearCookie("email");
+    res.json({cookie:"email" in req.cookies})
 });
 
 export default router;
