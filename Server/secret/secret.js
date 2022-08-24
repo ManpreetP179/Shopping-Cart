@@ -13,4 +13,4 @@ const firebaseConfig1 = {
 };
 
 
-export { firebaseConfig1 }
+export { firebaseConfig1 } 
