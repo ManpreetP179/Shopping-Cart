@@ -10,7 +10,11 @@ import userRouter from './routes/user.js';
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: ['http://localhost:3000','http://192.168.1.66:3000'],
+    methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH'],
+    credentials:true 
+}));
 app.use(logger("dev"))
 
 app.use(express.json());
@@ -24,12 +28,8 @@ app.use(methodOverride((req, res) => {
 
 app.use(cookieParser())
 
-
-
-
-
-app.use('/v1/api/users', userRouter)
-app.use('/v1/api/products', productRouter)
+app.use('/api/v1/users', userRouter)
+app.use('/api/v1/products', productRouter)
 const PORT = 9900
 const DOMAIN = 'localhost'
 app.listen(PORT, DOMAIN, () => {

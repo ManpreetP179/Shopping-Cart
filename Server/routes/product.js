@@ -1,6 +1,7 @@
 import express from 'express';
-import { addDoc, collection, doc, deleteDoc, where, query, getDoc, getDocs } from 'firebase/firestore';
+import { addDoc, collection, doc, deleteDoc, where, query, getDoc, getDocs, onSnapshot, serverTimestamp } from 'firebase/firestore';
 import { collections, db } from '../firebase.js';
+
 const router = express.Router();
 // TODO add db import
 /**
@@ -18,18 +19,19 @@ product_reviews
 
 router.get('/', async (req, res) => {
 
-
-    const productsRef = collection(db, collections.PRODUCTS)
-    if (productsRef.length === 0) {
-        
-    }
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
-      } else {
+    const docSnap = await getDoc(collection(db, collection.PRODUCTS));
+    const products = []
+    onSnapshot(docSnap, (snapshop) => {
+        snapshot.docs.forEach(doc => {
+            products.push({ ...doc.data(), id: doc.id })
+        })
+    })
+    if (products.length > 0) {
+        res.status(200).send(products)
+    } else {
         return res.sendStatus(400)
     }
-    res.status(200).send(list)
+
 })
 
 
@@ -41,11 +43,14 @@ router.post('/new', async (req, res) => {
         name,
         price,
         product_img,
-        description
+        description,
+        createdAt: serverTimestamp()
     }
     try {
         const newProductRef = await addDoc(collection(db, collections.PRODUCTS), newProduct)
-        res.send(newProductRef);
+        const responseJson = { ...newProductRef, id: newProductRef.id }
+        console.log(responseJson);
+        res.send(responseJson);
     } catch (error) {
         console.log(`Error: ${error}`);
     }
@@ -82,11 +87,7 @@ router.post('/delete', async (req, res) => {
         res.send(`Could not find matching product with product id ${product_id}`)
     }
 
-    //     if(!!id){
 
-    //     }
-    //     const response =  await db.collection('products').doc(id).delete();
-    //     res.status(200).send(id)
 })
 
 export default router;
