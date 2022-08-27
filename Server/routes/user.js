@@ -44,11 +44,11 @@ router.post('/signin', async (req, res, next) => {
 
             })
             .catch((error) => {
-                res.send(error)
+                res.json(error)
 
             })
     } catch (error) {
-        res.status(400).send(error.message)
+        res.status(400).json(error.message)
     }
 });
 

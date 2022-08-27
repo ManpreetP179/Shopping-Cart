@@ -10,21 +10,22 @@ function NavBar(props) {
     <>
       <nav>
         <NavLink to='/'> Home</NavLink>
-        <NavLink to='/products'> Products</NavLink>
+        <NavLink to='/products/index'> Products</NavLink>
         <NavLink to='/products/new'> NewProduct</NavLink>
 
         {!!currentUser ?
-          (
-            <>
-
+          (<>
               <span>|| Welcome ||</span>
               <a href="/signout" onClick={onSignOut} className="menu-item">Sign Out</a>
             </>
-          ) : <></>}
+          ) : 
+          (<>
+          <NavLink to='/signin'> ||Sign In ||</NavLink>
+          <NavLink to='/signup'>Sign Up</NavLink>
+          </>)}
 
 
-        <NavLink to='/signin'> ||Sign In ||</NavLink>
-        <NavLink to='/signup'>Sign Up</NavLink>
+       
 
 
       </nav>
