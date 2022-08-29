@@ -45,8 +45,8 @@ function App() {
           <Route path="index" element={<IndexProduct />} />
           <Route path="new" element={<NewProduct />} />
           <Route path=":id" element={<ShowProduct />} >
-              <Route path=":edit" element={<EditProduct />} />
-              <Route path=":delete" element={<DeleteProduct />} />
+              <Route path="edit" element={<EditProduct />} />
+              <Route path="delete" element={<DeleteProduct />} />
           </Route>
         </Route>
       </Routes>

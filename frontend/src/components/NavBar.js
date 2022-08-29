@@ -19,7 +19,7 @@ function NavBar(props) {
         {!!currentUser ?
           (<>
               <li>
-                <span>|| Welcome ||</span>
+                <span className="nav_item">|| Welcome ||</span>
                 <a href="/signout" onClick={onSignOut} className="nav_item">Sign Out</a>
               </li>
            </>

@@ -1,3 +1,4 @@
+import axios from "axios";
 const baseURL = "http://localhost:9900/api/v1"
 export const User = {
     current() {
@@ -36,13 +37,13 @@ export const User = {
 
 export const Products = {
     index() {
-        return fetch(`${baseURL}/products`,{
+        return fetch(`${baseURL}/products`, {
             method: "GET",
             credentials: "include"
         }).then(res => res.json());
     },
-    show(id){
-        return fetch(`${baseURL}/products/${id}`,{
+    show(id) {
+        return fetch(`${baseURL}/products/${id}`, {
             method: "GET",
             credentials: 'include'
         }).then(res => res.json())
@@ -57,11 +58,33 @@ export const Products = {
             body: JSON.stringify(params)
         }).then(res => res.json());
     },
-  
-    edit(params,id) {
+    create_t(params) {
+        return fetch(`${baseURL}/products/new`, {
+            method: 'POST',
+            credentials: 'include', //need for cookies to be allowed to be sent cross-origin
+            headers: {
+                'Content-Type': "application/x-www-form-urlencoded"
+            },
+            body: params
+        }).then(res => res.json());
+    },
+    create_axios(params) {
+        return axios.post(`${baseURL}/products/new`, params).then(res => res.json());
+         // axios
+    //     // .post("http://localhost:9900/api/v1/products/new", formData, {
+    //     //   headers: {
+    //     //     "Content-Type": "multipart/form-data",
+    //     //     withCredentials: true
+    //     //   },
+    //     // })
+    //     axios
+    //     .post("http://localhost:9900/api/v1/products/new", formData)
+    },
+
+    edit(params, id) {
         return fetch(`${baseURL}/products/${id}`, {
             method: 'PATCH',
-            credentials: 'include', //need for cookies to be allowed to be sent cross-origin
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
