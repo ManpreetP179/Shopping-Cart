@@ -18,8 +18,10 @@ function NavBar(props) {
         <ul className='navbar__sign'>
         {!!currentUser ?
           (<>
-              <span>|| Welcome ||</span>
-              <a href="/signout" onClick={onSignOut} className="nav_item">Sign Out</a>
+              <li>
+                <span>|| Welcome ||</span>
+                <a href="/signout" onClick={onSignOut} className="nav_item">Sign Out</a>
+              </li>
            </>
           ) : 
           (<>
